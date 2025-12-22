@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Tutor Connect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #1a5f7a;
+            --secondary-blue: #2d82b5;
+            --accent-green: #57cc99;
+            --light-blue: #e8f4fd;
+            --light-gray: #f5f7fa;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --border-radius: 8px;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--light-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 i {
+            color: var(--accent-green);
+        }
+
+        /* Button Grid */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .booking-btn {
+            background-color: var(--white);
+            border: 2px solid var(--light-blue);
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--dark-gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .booking-btn:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-blue);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .booking-btn i {
+            font-size: 1.8rem;
+            color: var(--secondary-blue);
+        }
+
+        .subject-btn {
+            border-left: 4px solid var(--secondary-blue);
+        }
+
+        .combo-btn {
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .exam-btn {
+            border-left: 4px solid #ff914d;
+        }
+
+        .btn-price {
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+            background-color: var(--light-blue);
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 5px;
+        }
+
+        /* Form Styles */
+        .enquiry-form {
+            background-color: var(--light-blue);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        /* Availability Section */
+        .availability-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .availability-item {
+            background-color: var(--light-blue);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .availability-item h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .modal-confirm {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+
+        .modal-confirm:hover {
+            background-color: #4abf88;
+        }
+
+        .modal-cancel {
+            background-color: #f1f1f1;
+            color: var(--dark-gray);
+        }
+
+        .modal-cancel:hover {
+            background-color: #e1e1e1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .button-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .availability-info {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h1>Virtual Tutor Connect</h1>
+            </div>
+            <p class="tagline">Book expert online tutors for personalized learning sessions</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Subject Selection -->
+        <section>
+            <h2><i class="fas fa-book-open"></i> Select a Subject</h2>
+            <p style="margin-bottom: 1.5rem; color: #555;">Choose from our expert tutors in these core subjects:</p>
+            <div class="button-grid">
+                <div class="booking-btn subject-btn" data-subject="Math">
+                    <i class="fas fa-calculator"></i>
+                    <span>Mathematics</span>
+                    <div class="btn-price">From $25/session</div>
+                </div>
+                <div class="booking-btn subject-btn" data-subject="Science">
+                    <i class="fas fa-flask"></i>
+                    <span>Science</span>
+                    <div class="btn-price">From $25/session</div>
+                </div>
+                <div class="booking-btn subject-btn" data-subject="English">
+                    <i class="fas fa-language"></i>
+                    <span>English</span>
+                    <div class="btn-price">From $22/session</div>
+                </div>
+                <div class="booking-btn subject-btn" data-subject="Coding">
+                    <i class="fas fa-code"></i>
+                    <span>Coding & Programming</span>
+                    <div class="btn-price">From $30/session</div>
+                </div>
+                <div class="booking-btn subject-btn" data-subject="CAT4">
+                    <i class="fas fa-brain"></i>
+                    <span>CAT4 Test Prep</span>
+                    <div class="btn-price">From $28/session</div>
+                </div>
+                <div class="booking-btn subject-btn" data-subject="ICT">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>ICT & Computer Science</span>
+                    <div class="btn-price">From $26/session</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Combination Packages -->
+        <section>
+            <h2><i class="fas fa-layer-group"></i> Combination Packages</h2>
+            <p style="margin-bottom: 1.5rem; color: #555;">Save with our popular subject combinations:</p>
+            <div class="button-grid">
+                <div class="booking-btn combo-btn" data-subject="Math + Science Combo">
+                    <i class="fas fa-atom"></i>
+                    <span>Math + Science Combo</span>
+                    <div class="btn-price">$45/session (Save $5)</div>
+                </div>
+                <div class="booking-btn combo-btn" data-subject="English + Math Combo">
+                    <i class="fas fa-pen-fancy"></i>
+                    <span>English + Math Combo</span>
+                    <div class="btn-price">$42/session (Save $5)</div>
+                </div>
+                <div class="booking-btn combo-btn" data-subject="All 3 - Math, Science, English">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>All 3 - Math, Science, English</span>
+                    <div class="btn-price">$60/session (Save $12)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exam Preparation -->
+        <section>
+            <h2><i class="fas fa-clipboard-check"></i> Exam Preparation</h2>
+            <p style="margin-bottom: 1.5rem; color: #555;">Specialized prep for important exams:</p>
+            <div class="button-grid">
+                <div class="booking-btn exam-btn" data-subject="SAT/ACT Prep">
+                    <i class="fas fa-university"></i>
+                    <span>SAT/ACT Prep</span>
+                    <div class="btn-price">From $35/session</div>
+                </div>
+                <div class="booking-btn exam-btn" data-subject="Final Exam Review">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Final Exam Review</span>
+                    <div class="btn-price">From $30/session</div>
+                </div>
+                <div class="booking-btn exam-btn" data-subject="Entrance Exam Prep">
+                    <i class="fas fa-door-open"></i>
+                    <span>Entrance Exam Prep</span>
+                    <div class="btn-price">From $32/session</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tutor Availability -->
+        <section>
+            <h2><i class="fas fa-calendar-alt"></i> Tutor Availability</h2>
+            <p>Our tutors are available for sessions throughout the week. Most tutors offer flexible scheduling including evenings and weekends.</p>
+            <div class="availability-info">
+                <div class="availability-item">
+                    <h4>Weekdays</h4>
+                    <p>3:00 PM - 9:00 PM (Local Time)</p>
+                </div>
+                <div class="availability-item">
+                    <h4>Weekends</h4>
+                    <p>9:00 AM - 6:00 PM (Local Time)</p>
+                </div>
+                <div class="availability-item">
+                    <h4>Emergency Sessions</h4>
+                    <p>Available upon request with 24h notice</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enquiry Form -->
+        <section>
+            <h2><i class="fas fa-question-circle"></i> General Enquiry Form</h2>
+            <p style="margin-bottom: 1.5rem; color: #555;">Have questions? Send us a message and we'll get back to you within 24 hours.</p>
+            
+            <div class="enquiry-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" placeholder="Tell us about your learning needs, preferred schedule, or any questions you have"></textarea>
+                </div>
+                
+                <button type="button" class="submit-btn" id="submit-enquiry">
+                    <i class="fas fa-paper-plane"></i> Send Enquiry
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmation-modal">
+        <div class="modal">
+            <h3>Confirm Booking</h3>
+            <p id="modal-message">Connecting to tutor for <span id="subject-name"></span>...</p>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">You will be redirected to WhatsApp to complete your booking.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-confirm" id="confirm-booking">Continue to WhatsApp</button>
+                <button class="modal-btn modal-cancel" id="cancel-booking">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="copyright">
+                <p>&copy; 2023 Virtual Tutor Connect. All rights reserved.</p>
+                <p style="margin-top: 5px; font-size: 0.8rem;">Designed for seamless tutor booking experience</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tutor's WhatsApp number (replace with actual number to change)
+        const tutorWhatsAppNumber = "+2349013409639";
+        
+        // Variables to track selected subject and booking type
+        let selectedSubject = "";
+        let currentBookingType = "";
+        
+        // Get DOM elements
+        const bookingButtons = document.querySelectorAll('.booking-btn');
+        const modal = document.getElementById('confirmation-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const subjectNameElement = document.getElementById('subject-name');
+        const confirmBookingBtn = document.getElementById('confirm-booking');
+        const cancelBookingBtn = document.getElementById('cancel-booking');
+        const submitEnquiryBtn = document.getElementById('submit-enquiry');
+        
+        // Add click event listeners to all booking buttons
+        bookingButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                selectedSubject = this.getAttribute('data-subject');
+                currentBookingType = this.classList.contains('subject-btn') ? 'subject' : 
+                                     this.classList.contains('combo-btn') ? 'combo' : 'exam';
+                
+                // Update modal message
+                subjectNameElement.textContent = selectedSubject;
+                modalMessage.textContent = `Connecting to tutor for ${selectedSubject}...`;
+                
+                // Show modal
+                modal.classList.add('active');
+            });
+        });
+        
+        // Confirm booking - redirect to WhatsApp
+        confirmBookingBtn.addEventListener('click', function() {
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(`I'm interested in booking a session for ${selectedSubject}`);
+            
+            // Create WhatsApp URL
+            const whatsappURL = `https://wa.me/${tutorWhatsAppNumber}?text=${encodedMessage}`;
+            
+            // Redirect to WhatsApp
+            window.open(whatsappURL, '_blank');
+            
+            // Close modal
+            modal.classList.remove('active');
+            
+            // Reset selection
+            selectedSubject = "";
+            currentBookingType = "";
+        });
+        
+        // Cancel booking
+        cancelBookingBtn.addEventListener('click', function() {
+            modal.classList.remove('active');
+            selectedSubject = "";
+            currentBookingType = "";
+        });
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                selectedSubject = "";
+                currentBookingType = "";
+            }
+        });
+        
+        // Handle enquiry form submission
+        submitEnquiryBtn.addEventListener('click', function() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Basic validation
+            if (!name || !phone || !message) {
+                alert('Please fill in all fields before submitting.');
+                return;
+            }
+            
+            // Create enquiry message
+            const enquiryMessage = `New Enquiry from Virtual Tutor Connect%0A%0AName: ${name}%0APhone: ${phone}%0AMessage: ${message}`;
+            
+            // Create WhatsApp URL for enquiry
+            const whatsappURL = `https://wa.me/${tutorWhatsAppNumber}?text=${encodeURIComponent(enquiryMessage)}`;
+            
+            // Open WhatsApp with enquiry
+            window.open(whatsappURL, '_blank');
+            
+            // Clear form
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('message').value = '';
+            
+            // Show confirmation
+            alert('Your enquiry has been submitted. You will be redirected to WhatsApp.');
+        });
+        
+        // Add some visual feedback when hovering over booking buttons
+        bookingButtons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // Form input validation
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function() {
+            // Allow only numbers, spaces, dashes, and plus sign
+            this.value = this.value.replace(/[^0-9\s\-+]/g, '');
+        });
+    </script>
+</body>
+</html>
