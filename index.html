@@ -618,7 +618,7 @@
             }
             
             // Create enquiry message
-            const enquiryMessage = `New Enquiry from Virtual Tutor Connect%0A%0AName: ${name}%0APhone: ${phone}%0AMessage: ${message}`;
+            const enquiryMessage = `New Enquiry from Virtual Tutor Connect Name: ${name} Phone: ${phone} Message: ${message}`;
             
             // Create WhatsApp URL for enquiry
             const whatsappURL = `https://wa.me/${tutorWhatsAppNumber}?text=${encodeURIComponent(enquiryMessage)}`;
@@ -656,4 +656,5 @@
         });
     </script>
 </body>
+
 </html>
